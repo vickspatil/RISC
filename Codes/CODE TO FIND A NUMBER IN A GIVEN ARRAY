@@ -1,0 +1,22 @@
+CODE TO FIND A NUMBER IN A GIVEN ARRAY
+
+
+.data
+
+array: .half 0x1234,0x2312,0x1342
+key: .half 0x1234
+
+.text
+la x1,array #loading array base address
+la x2,key 
+lw x2,0(x2) # loading key to find in array
+la x10
+for:
+lhu x3,0(x1) # storing element of array
+beq x3,x2,exit # checking key and array value
+addi x1,x1,2 # incrementing pointer to point to next array element
+addi x4,x0,1 # incrementing index
+beq x0,x0,for
+
+exit:
+sw x4,0(x10)

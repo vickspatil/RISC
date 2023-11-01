@@ -1,0 +1,42 @@
+CODE-2 TO CONVERT TO LITTLE ENDIAN
+
+.data
+num: .word 0x1a2b3c4d
+res: .word 0x00000000
+mask: .word 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000
+
+.text
+la x1,num #BA
+la x2,res
+la x3,mask
+
+lw x4,0(x3) #masks
+lw x5,4(x3)
+lw x6,8(x3)
+lw x7,12(x3)
+
+add x8,x0,x0 #temp
+add x9,x0,x0
+add x10,x0,x0
+add x11,x0,x0
+
+lw x12,0(x1) #load main num
+
+and x8,x12,x4
+and x9,x12,x5
+and x10,x12,x6
+and x11,x12,x7
+
+slli x8,x8,24
+slli x9,x9,8
+srli x10,x10,8
+srli x11,x11,24
+
+add x13,x0,x0
+
+or x13,x13,x8
+or x13,x13,x9
+or x13,x13,x10
+or x13,x13,x11
+
+sw x13,0(x2)

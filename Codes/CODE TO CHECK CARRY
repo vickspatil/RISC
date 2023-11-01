@@ -1,0 +1,12 @@
+.data
+num: .word 0x80003281,0x81234528,0x00000000
+.text
+la x10, num;
+lw x19,0(x10)
+lw x20,4(x10)
+add x21,x19,x20
+bltu x21,x20,carrynt
+beq x21,x20,nocarry
+carrynt: addi x23, x0, 1
+nocarry: sw x23, 12(x10)
+              sw x21, 16(x10)

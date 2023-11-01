@@ -1,0 +1,18 @@
+CODE-1 TO CONVERT TO LITTLE ENDIAN
+
+.data
+num: .word 0x0a0b0c0d
+.text
+
+la x10, num
+lw x11, 0(x10)
+
+addi x12, x0, 3
+back:
+    andi x13, x11, 0xff
+    add x14, x14, x13
+    slli x14, x14, 8
+    srli x11, x11, 8
+    addi x12, x12, -1
+    bnez x12, back
+add x14, x14, x11

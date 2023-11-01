@@ -1,0 +1,18 @@
+CODE TO ADD AN ARRAY OF TEN 16-BIT NUMBERS
+
+.data
+
+a: .half 0x1234, 0x1222, 0x1232, 0x3452, 0x2341, 0x2345, 0x4567, 0x3453, 0x5454, 0x3453
+
+.text
+
+la x10,a
+addi x20,x0,10
+back: 
+  lhu x18,0(x10)
+  add x21,x21,x18
+  addi x10,x10,2
+  addi x20,x20,-1
+  bne x20,x0,back
+ecall
+sh x21,0(x10)

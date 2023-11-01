@@ -1,0 +1,20 @@
+CODE TO ADD TWO 64 BIT NUMBERS
+ex: 0x1234 5678 8000 0000 and 0xFFFF FFFF 8123 4567
+
+.data
+num: .word 0x80000000,0x81234567,0x12345678,0xffffffff
+.text
+la x10, num
+lw x19,0(x10)
+lw x20,4(x10)
+add x21,x19,x20
+addi x23,x0,0
+bltu x21,x20,carrynt
+carrynt: addi x23, x0, 1
+lw x19,8(x10)
+lw x20,12(x10)
+add x22,x19,x20
+add x22,x22,x23
+addi x25,x0,0
+bltu x25,x0,carryy
+carryy: addi x24,x0,1

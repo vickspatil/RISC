@@ -1,0 +1,51 @@
+.data
+num: .byte 0x03
+mask: .byte 0xe0,0x17
+two: .byte 0x02
+show: .byte 0xff,0x01
+
+.text
+la x1,num
+la x2,mask
+la x30,two
+la x29,show
+
+lbu x3,0(x1)
+lbu x4,0(x2) #e0
+lbu x5,1(x2) #17
+
+# x6 is having msb
+# x7 is having lsb
+
+and x6,x3,x4
+and x7,x3,x5
+
+#checking condition 1
+beq x6,x0,condi2
+beq x0,x0,exitff
+condi2: 
+
+addi x8,x0,5 # counter 5
+add x9,x0,x0 # conting number of 1's
+
+back:
+add x10,x0,x0
+andi x10,x7,1
+add x9,x9,x10
+srli x7,x7,1
+addi x8,x8,-1
+bne x8,x0,back
+lbu x31,0(x30)
+beq x9,x31,exit01
+
+exitff:
+lbu x20,0(x29) #oxff
+add x22,x0,x20
+beq x0,x0,close
+
+exit01:    
+lbu x19,1(x29) #0x01
+add x22,x0,x19
+beq x0,x0,close
+
+close: nop
